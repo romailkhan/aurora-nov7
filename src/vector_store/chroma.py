@@ -13,7 +13,7 @@ class VectorStore:
         self.openai_client = OpenAI(api_key=api_key)
         
         self.chroma_client = chromadb.PersistentClient(
-            path="../../data/chroma_db",
+            path="./data/chroma_db",
             settings=ChromaSettings(
                 anonymized_telemetry=False
             )
