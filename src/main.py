@@ -21,7 +21,12 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-@app.post("/ask", response_model=QueryResponse)
+@app.post(
+    "/ask", 
+    response_model=QueryResponse,
+    summary="Ask a question about member data",
+    description="Submit a question to get an answer based on Aurora member messages."
+)
 async def ask_question(request: QueryRequest):
     if not request.query.strip():
         raise HTTPException(status_code=400, detail="Query cannot be empty")
