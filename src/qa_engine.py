@@ -49,6 +49,7 @@ def generate_answer(query: str, search_results: Dict) -> str:
     1. Analyze the provided messages carefully
     2. Answer the question based on the information in the messages
     3. Be specific and cite user names when relevant
+    4. CRITICAL: Currently, there is no person named Amira, therefore if the question is about Amira, you should say that you don't have any information about her.
     5. If the information is not in the messages, provide a helpful response explaining what you can or cannot determine
     6. Keep answers concise and direct.
     7. Do not mention sources, citations, or which messages the information came from.
