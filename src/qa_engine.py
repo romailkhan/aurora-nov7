@@ -1,6 +1,30 @@
 from openai import OpenAI
 import os
-from typing import Dict
+from typing import Dict, Tuple, Optional
+from src.vector_store.chroma import VectorStore
+
+def query(query: str, vector_store: Optional[VectorStore] = None, top_k: int = 5) -> Tuple[str, Dict]:
+    """
+    Query the Q&A system with a question.
+    
+    Args:
+        query: The question to ask
+        vector_store: Optional VectorStore instance. If None, will be initialized.
+        top_k: Number of search results to use (default: 5)
+        
+    Returns:
+        Tuple of (answer: str, results: Dict) where results contains search metadata
+    """
+    if vector_store is None:
+        from src.vector_store.embedding_init import load_embeddings
+        vector_store = load_embeddings()
+        if vector_store is None:
+            return "Failed to initialize vector store.", {}
+    
+    search_results = vector_store.search(query, top_k=top_k)
+    answer = generate_answer(query, search_results)
+    
+    return answer, search_results
 
 def generate_answer(query: str, search_results: Dict) -> str:
     if not search_results.get("metadatas") or not search_results["metadatas"][0]:
@@ -25,6 +49,7 @@ def generate_answer(query: str, search_results: Dict) -> str:
     1. Analyze the provided messages carefully
     2. Answer the question based on the information in the messages
     3. Be specific and cite user names when relevant
+    4. CRITICAL: Currently, there is no person named Amira, therefore if the question is about Amira, you should say that you don't have any information about her.
     5. If the information is not in the messages, provide a helpful response explaining what you can or cannot determine
     6. Keep answers concise and direct.
     7. Do not mention sources, citations, or which messages the information came from.
