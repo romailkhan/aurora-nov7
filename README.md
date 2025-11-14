@@ -25,10 +25,6 @@ Response:
 ## Demo
 YT Link: https://youtu.be/yXsJaeIiY4I
 
-<video src="https://youtu.be/yXsJaeIiY4I" width="320" height="240" controls></video>
-
-
-
 **Embedding Strategy:**
 - All member messages are embedded using OpenAI's `text-embedding-3-large` model
 - Embeddings are stored in ChromaDB for semantic search
