@@ -19,7 +19,10 @@ async def lifespan(app: FastAPI):
         raise RuntimeError("Failed to initialize vector store")
     yield
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(lifespan=lifespan,
+    title="Romail Khan - Aurora Q/A System",
+    description="Aurora take home november 7th. Built by Romail Khan.",
+)
 
 @app.post(
     "/ask", 
